@@ -1,4 +1,7 @@
 target/
+WebContent/
+mvnw
+mvnw.cmd
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
