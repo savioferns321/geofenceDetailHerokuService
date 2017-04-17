@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.fencedetails.model.GeoFenceDetail;
+import com.example.fencedetails.model.GeoFenceDetailList;
 import com.example.fencedetails.service.GFDetailService;
 
 @RestController
@@ -94,6 +95,7 @@ public class GFDetailController {
             method = RequestMethod.DELETE
     )
     public ResponseEntity<?> deleteDetail(@PathVariable(value="id") String id)    {
+
         System.out.println("ID = " + id);
         try {
             service.delete (id);
@@ -103,4 +105,20 @@ public class GFDetailController {
         }
     }
 
+    @RequestMapping(
+            value = "/details",
+            method = RequestMethod.GET,
+            headers = "Accept=*/*",
+            produces = {
+                    MediaType.APPLICATION_JSON_VALUE
+            }
+    )
+    public ResponseEntity<?> getAllEmployees()   {
+        try {
+            GeoFenceDetailList detailList = service.fetchAll();
+            return new ResponseEntity<> (detailList, HttpStatus.OK);
+        }catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

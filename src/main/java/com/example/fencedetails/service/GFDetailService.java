@@ -1,9 +1,12 @@
 package com.example.fencedetails.service;
 
+import java.util.function.Consumer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.fencedetails.model.GeoFenceDetail;
+import com.example.fencedetails.model.GeoFenceDetailList;
 import com.example.fencedetails.repository.GFDetailRepository;
 
 @Service
@@ -42,5 +45,16 @@ public class GFDetailService {
     public GeoFenceDetail fetch (String id) throws Exception {
         return detailExists(id);
     }
-	
+    
+    public GeoFenceDetailList fetchAll () {
+        Iterable<GeoFenceDetail> details = repository.findAll ();
+        final GeoFenceDetailList detailList = new GeoFenceDetailList ();
+        details.forEach (new Consumer<GeoFenceDetail> () {
+            @Override
+            public void accept (GeoFenceDetail detail) {
+            	detailList.getGeoFenceDetails().add (detail);
+            }
+        });
+        return detailList;
+    }
 }
